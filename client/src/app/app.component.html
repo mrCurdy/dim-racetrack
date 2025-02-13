@@ -1,0 +1,19 @@
+<div>
+  <p>Received:</p>
+  <div *ngFor="let msg of messages">
+    {{ msg }}
+  </div>
+</div>
+<div>
+  <input
+    [(ngModel)]="nickName"
+    placeholder="Your nickname"
+    (keydown.enter)="setNickName()"
+  />
+  <input
+    [(ngModel)]="message"
+    placeholder="Enter message"
+    (keydown.enter)="sendMessage()"
+  />
+  <button (click)="sendMessage()">Send</button>
+</div>
