@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { SocketService } from '../../socket.service';
+import { SocketService } from '../../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {MatInputModule} from '@angular/material/input';

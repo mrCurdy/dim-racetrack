@@ -1,0 +1,17 @@
+
+.container {
+    color: white;
+    font-size: large;
+    font-weight: 800;
+    height: 70px;
+    background-color: brown;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.left,
+.center,
+.right {
+    padding: 20px;
+}

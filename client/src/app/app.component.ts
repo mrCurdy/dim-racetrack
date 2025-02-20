@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ChatComponent } from "./components/chat/chat.component";
+import { HomeComponent } from "./home/home.component";
 
 
  
@@ -8,7 +8,7 @@ import { ChatComponent } from "./components/chat/chat.component";
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    ChatComponent
+    HomeComponent,
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
