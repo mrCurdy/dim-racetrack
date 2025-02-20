@@ -1,0 +1,23 @@
+<div class="container">
+    <div #scrollContainer class="chat-window">
+      <div class="messages" *ngFor="let msg of messages">
+        {{ msg }}
+      </div>
+    </div>
+      <input
+      id="nickname-input"
+      class="short-input"
+        [(ngModel)]="nickName"
+        placeholder="Your nickname"
+        (keydown.enter)="setNickName()"
+      />
+      <textarea
+      id="message-input"
+        [(ngModel)]="sentMsg"
+        placeholder="Enter message"
+        (keydown)="onKeyDown($event)"
+      ></textarea>
+      <div class="end">
+    <button id="send-btn" class="send-btn" (click)="sendMessage()">Send</button>
+  </div>
+  </div>
