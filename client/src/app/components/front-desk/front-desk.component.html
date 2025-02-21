@@ -1,22 +1,35 @@
 <div class="container">
     <div class="driver-list">
-        <div class="driver">
+        <div class="driver text-center">
             <h3>
                 Drivers:
             </h3>
         </div>
-        <div class="driver" *ngFor="let driver of drivers">
-            {{ driver }}
+        <div class="driver padding-r-80" *ngFor="let driver of drivers">
+            <div class="edit-delete-container">
+                <div class="edit">edit</div>
+                <div class="delete">delete</div>
+            </div>
+            <div class="driver-name">{{ driver }}</div>
+            
         </div>
-        <div class="driver">+</div>
+        <div class="driver">
+            <input 
+            id="new-driver" 
+            class="clear" 
+            type="text"
+            placeholder="+"
+            [(ngModel)]="newDriver"
+            (keydown)="onKeyDown($event)">
+        </div>
     </div>
     <div class="driver-list">
-        <div class="driver">
+        <div class="driver text-center">
             <h3>
                 Session 1
             </h3>
         </div>
-        <div class="driver">
+        <div class="driver text-center">
             <div class="number">1</div>
             Bob Smith
         </div>

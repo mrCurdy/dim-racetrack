@@ -6,39 +6,50 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { MessageService } from './services/message.service';
+import { DriverService } from './services/driver.service';
 
 @WebSocketGateway()
 export class AppGateway implements OnGatewayInit {
   @WebSocketServer() server: Server;
 
-  private messages: string[] = []; // Хранилище сообщений
-  private confirmQuestion: boolean; // Подтверждение удаления
+  constructor(
+    private readonly messageService: MessageService,
+    private readonly driverService: DriverService
+  ) {}
 
   afterInit(server: any) {
     console.log('WebSocket Server Initialized');
   }
 
   handleConnection(client: Socket) {
-    // Отправляем все сообщения при подключении клиента
-    client.emit('allMessages', this.messages); // Only one Client
+    // Send all messages and drivers upon connection
+    client.emit('allMessages', this.messageService.getMessages());
+    client.emit('allDrivers', this.driverService.getDrivers());
   }
-  
+
   @SubscribeMessage('message')
   handleMessage(@MessageBody() message: string): void {
-    // Отправляем сообщения уже по одному
     console.log('Received message:', message);
 
     if (message === 'delete: history') {
-      message =
-        'Are you sure to delete chat history? nickname = yes, message = delete';
-      this.confirmQuestion = true;
+      message = 'Are you sure to delete chat history? nickname = yes, message = delete';
+      this.messageService.setConfirmQuestion(true);
     }
-    if (this.confirmQuestion && message === 'yes: delete') {
-      this.messages = [];
+    if (this.messageService.getConfirmQuestion() && message === 'yes: delete') {
+      this.messageService.clearMessages();
       message = '';
+      this.server.emit('allMessages', this.messageService.getMessages());
     }
 
-    this.messages.push(message);
+    this.messageService.addMessage(message);
     this.server.emit('message', message); // for all clients
+  }
+
+  @SubscribeMessage('addDriver')
+  handleAddDriver(@MessageBody() driver: string): void {
+    console.log('Received driver:', driver);
+    this.driverService.addDriver(driver);
+    this.server.emit('allDrivers', this.driverService.getDrivers());
   }
 }
