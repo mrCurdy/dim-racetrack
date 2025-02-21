@@ -1,19 +1,39 @@
 <div class="container">
     <div class="driver-list">
-        <div class="driver text-center">
+        <div class="driver-list-header">
             <h3>
                 Drivers:
             </h3>
         </div>
-        <div class="driver padding-r-80" *ngFor="let driver of drivers">
-            <div class="edit-delete-container">
-                <div class="edit">edit</div>
-                <div class="delete">delete</div>
+        <div  *ngFor="let driver of drivers">
+            <div class="driver-container"  *ngIf="editingDriver !== driver">
+                <div class="driver-name">{{ driver }}</div>
+                <div class="edit-delete-container">
+                    <div class="edit" (click)="startEdit(driver)">edit</div>
+                    <div class="edit" (click)="confirmDelete(driver)">delete</div>
+                    <div class="edit">session</div>
+                </div>
             </div>
-            <div class="driver-name">{{ driver }}</div>
+        <div class="edit-form driver-container" *ngIf="editingDriver === driver">
+            <input [(ngModel)]="newDriverName" />
+            <button class="save-btn" (click)="saveEdit()">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          </div>
+            <!-- <div class="session-info"></div> -->
+            <!-- <div class="driver" *ngFor="let driver of drivers">
+                <div *ngIf="editingDriver !== driver">
+                  <span>{{ driver }}</span>
+                  <button class="edit-btn" (click)="startEdit(driver)">Edit</button>
+                </div>
+                <div *ngIf="editingDriver === driver">
+                  <input [(ngModel)]="newDriverName" />
+                  <button class="save-btn" (click)="saveEdit()">Save</button>
+                  <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                </div>
+              </div> -->
             
         </div>
-        <div class="driver">
+        <div class="driver-container">
             <input 
             id="new-driver" 
             class="clear" 
@@ -24,14 +44,25 @@
         </div>
     </div>
     <div class="driver-list">
-        <div class="driver text-center">
+        <div class="driver-list-header">
             <h3>
                 Session 1
             </h3>
         </div>
-        <div class="driver text-center">
+        <div class="driver-container">
             <div class="number">1</div>
-            Bob Smith
+            <div class="driver-name">Bob Smith</div>
+            <div class="edit-delete-container">
+                <div class="edit">move</div>
+            </div>
         </div>
+    </div>
+</div>
+
+<div class="popup" *ngIf="driverToDelete">
+    <div class="popup-content">
+        <p>Are you sure you want to delete {{ driverToDelete }}?</p>
+        <button id="confirmDelete" (click)="deleteDriver()">Yes, delete</button>
+        <button id="cancel" (click)="cancelDelete()">Cancel</button>
     </div>
 </div>

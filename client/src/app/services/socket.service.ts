@@ -24,6 +24,18 @@ export class SocketService {
     this.socket.emit('addDriver', driver);
   }
 
+  updateDrivers(drivers: string[]): void {
+    this.socket.emit('updateDrivers', drivers);
+  }
+
+  editDriver(oldName: string, newName: string): void {
+    this.socket.emit('editDriver', { oldName, newName });
+  }
+
+  deleteDriver(driver: string): void {
+    this.socket.emit('deleteDriver', driver);
+  }
+
   receiveMessage(): Observable<string> {
     return new Observable<string>((observer) => {
       this.socket.on('allMessages', (messages: string[]) => {

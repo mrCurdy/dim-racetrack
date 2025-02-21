@@ -52,4 +52,26 @@ export class AppGateway implements OnGatewayInit {
     this.driverService.addDriver(driver);
     this.server.emit('allDrivers', this.driverService.getDrivers());
   }
+
+  @SubscribeMessage('updateDrivers')
+  handleUpdateDrivers(@MessageBody() updatedDrivers: string[]): void {
+    console.log('Updated driver list:', updatedDrivers);
+    this.driverService.updateDrivers(updatedDrivers);
+    this.server.emit('allDrivers', this.driverService.getDrivers()); // Notify all clients
+  }
+
+  @SubscribeMessage('deleteDriver')
+  handleDeleteDriver(@MessageBody() driver: string): void {
+    this.driverService.deleteDriver(driver);
+    this.server.emit('allDrivers', this.driverService.getDrivers()); // Notify all clients
+  }
+
+  @SubscribeMessage('editDriver')
+  handleEditDriver(@MessageBody() { oldName, newName }: { oldName: string; newName: string }): void {
+  console.log(`Editing driver: ${oldName} → ${newName}`);
+  this.driverService.updateDriver(oldName, newName);
+  this.server.emit('allDrivers', this.driverService.getDrivers()); // Notify all clients
+}
+
+  
 }
