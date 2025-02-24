@@ -27,17 +27,6 @@ export class FrontDeskComponent implements OnInit{
 
   driverToDelete: string | null = null;
   private subscriptions: Subscription[] | null = null;
-  ///example
-  // sessionMap: Map<number, string> = new Map([
-  //   [1, "Driver A"],
-  //   [2, "Driver B"],
-  //   [3, "Driver C"],
-  //   [4, "Driver D"],
-  //   [5, "Driver E"],
-  //   [6, "Driver F"],
-  //   [7, "Driver G"],
-  //   [8, "Driver H"]
-  // ]);
 
   constructor(
     private driverListService: DriverListService,

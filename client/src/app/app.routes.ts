@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FrontDeskComponent } from './components/front-desk/front-desk.component';
+import { SessionEditerComponent } from './components/session-editer/session-editer.component';
 
 export const routes: Routes = [
     // {
@@ -8,7 +9,11 @@ export const routes: Routes = [
     //     component: HomeComponent,
     // },
     {
-        path: 'front-desk',
+        path: 'driver-list',
         component: FrontDeskComponent,
+    },
+    {
+        path: 'front-desk',
+        component: SessionEditerComponent,
     }
 ];

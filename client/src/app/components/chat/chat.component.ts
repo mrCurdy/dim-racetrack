@@ -1,9 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { SocketService } from '../../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +26,7 @@ export class ChatComponent {
   nickName: string = '';
   messages: string[] = [];
 
-  constructor(private socketService: SocketService) {}
+  constructor(private messageServie: MessageService) {}
 
 
   private scrollToBottom(): void {
@@ -42,7 +42,7 @@ export class ChatComponent {
   }
 
   ngOnInit(): void {
-    this.socketService.receiveMessage().subscribe((data) => {
+    this.messageServie.receiveMessage().subscribe((data: string) => {
       this.recievedMsg = data;
       this.messages.push(data);
       console.log(this.recievedMsg);
@@ -53,7 +53,7 @@ export class ChatComponent {
 
   sendMessage() {
     if (this.nickName) {
-      this.socketService.sendMessage(this.nickName + ': ' + this.sentMsg);
+      this.messageServie.sendMessage(this.nickName + ': ' + this.sentMsg);
       console.log('message sent');
       this.sentMsg = ''; // Очищаем поле ввода
     } else {

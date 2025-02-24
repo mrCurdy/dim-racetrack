@@ -1,6 +1,5 @@
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Socket } from 'dgram';
-import { Server } from 'http';
 import { DriverListService } from './driver-list.service';
 import { AppGateway } from 'src/shared/shared.gateway';
 
@@ -9,7 +8,7 @@ export class DriverListGateway {
 
   constructor(
     private readonly driverListService: DriverListService,
-    private readonly appGateway: AppGateway,) {}
+    private readonly sharedGateway: AppGateway,) {}
 
   afterInit(server: any) {
     console.log('WebSocket Server Initialized');
@@ -24,20 +23,20 @@ export class DriverListGateway {
   handleAddDriver(@MessageBody() driver: string): void {
     console.log('Received driver:', driver);
     this.driverListService.addDriver(driver);
-    this.appGateway.server.emit('addedDriver', this.driverListService.getDriver(driver));
+    this.sharedGateway.server.emit('addedDriver', this.driverListService.getDriver(driver));
   }
 
   @SubscribeMessage('deleteDriver')
   handleDeleteDriver(@MessageBody() driver: string): void {
     console.log(driver + " deleted")
     this.driverListService.deleteDriver(driver);
-    this.appGateway.server.emit('deletedDriver', driver);
+    this.sharedGateway.server.emit('deletedDriver', driver);
   }
 
   @SubscribeMessage('editDriver')
   handleEditDriver(@MessageBody() { oldName, newName }: { oldName: string; newName: string }): void {
     console.log(`Driver ${oldName} edited to ${newName}`);
     this.driverListService.updateDriver(oldName, newName);
-    this.appGateway.server.emit('editedDriver', [oldName, this.driverListService.getDriver(newName)]);
+    this.sharedGateway.server.emit('editedDriver', [oldName, this.driverListService.getDriver(newName)]);
   }
 }

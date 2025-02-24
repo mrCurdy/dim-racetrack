@@ -1,1 +1,57 @@
-<p>session-editer works!</p>
+<div class="container">
+    <div *ngFor="let session of sessions; let i = index">
+        <div class="session" >
+            <div class="session-header" (click)="selectSession(i)">
+                <div class="edit-delete-container">
+                    <div class="edit" >delete</div>
+                </div>
+                <h3>
+                    {{ session.get(0) }}
+                </h3>
+                
+            </div>
+            
+                <div *ngFor="let driver of getDrivers(session)">
+                    <div class="driver-container">
+                        <div class="driver-name">{{ driver }}</div>
+                        <div class="edit-delete-container">
+                            <div class="edit">edit</div>
+                            <div class="edit">delete</div>
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="driver-container">
+                <input 
+                id="new-driver" 
+                class="clear" 
+                type="text"
+                placeholder="Click to add a driver"
+                [(ngModel)]="newDriver"
+                (keydown)="onKeyDown($event)">
+                <!-- (keydown.enter)="addDriver()" -->
+            </div>
+        </div>
+    </div>
+<!-- </div> -->
+
+<!-- <div class="popup" *ngIf="sessionToDelete">
+    <div class="popup-content">
+        <p>Are you sure you want to delete {{ sessionToDelete }}?</p>
+        <button id="confirmDelete" (click)="deleteSession(sessionToDelete)">Yes, delete</button>
+        <button id="cancel" (click)="cancelSessionDelete()">Cancel</button>
+    </div>
+</div>
+
+<div class="popup" *ngIf="driverToDelete">
+    <div class="popup-content">
+        <p>Are you sure you want to delete {{ driverToDelete }}?</p>
+        <button id="confirmDelete" (click)="deleteDriver()">Yes, delete</button>
+        <button id="cancel" (click)="cancelDriverDelete()">Cancel</button>
+    </div> -->
+
+    <!-- <div class="edit-form driver-container" *ngIf="editingDriver === driver">
+                    <input [(ngModel)]="newDriverName" />
+                    <button class="save-btn" (click)="saveEdit()">Save</button>
+                    <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                </div> -->
