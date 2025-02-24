@@ -22,6 +22,7 @@ export class SocketService {
   // Send driver to server
   registerDriver(driver: string): void {
     this.socket.emit('addDriver', driver);
+    console.log('driver sent')
   }
 
   updateDrivers(drivers: string[]): void {
@@ -51,7 +52,7 @@ export class SocketService {
 
 
   // Receive all drivers from server
-  receiveDrivers(): Observable<string[]> {
+  receiveAllDrivers(): Observable<string[]> {
     return new Observable<string[]>((observer) => {
       this.socket.on('allDrivers', (drivers: string[]) => {
         // Handle received drivers
@@ -59,6 +60,35 @@ export class SocketService {
       });
     }).pipe(takeUntil(this.destroy$));
   }
+
+  receiveNewDriver(): Observable<string> {
+    return new Observable<string>((observer) => {
+      this.socket.on('addedDriver', (driver: string) => {
+        // Handle received drivers
+        observer.next(driver);
+      });
+    }).pipe(takeUntil(this.destroy$));
+  }
+
+  receiveEditedDriver(): Observable<string[]> {
+    return new Observable<string[]>((observer) => {
+      this.socket.on('editedDriver', (editedDriver: string[]) => {
+        // Handle received drivers
+        observer.next(editedDriver);
+      });
+    }).pipe(takeUntil(this.destroy$));
+  }
+
+  receiveDeletedDriver(): Observable<string> {
+    return new Observable<string>((observer) => {
+      this.socket.on('deletedDriver', (driver: string) => {
+        // Handle received drivers
+        observer.next(driver);
+      });
+    }).pipe(takeUntil(this.destroy$));
+  }
+
+
 
   // Disconnect and clean up socket
   ngOnDestroy(): void {

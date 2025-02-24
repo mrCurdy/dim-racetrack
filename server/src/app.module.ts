@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AppGateway } from './app.gateway';
+import { AppGateway } from './shared/app.gateway';
 import { ChatModule } from './chat/chat.module';
-import { MessageService } from './services/message.service';
-import { DriverService } from './services/driver.service';
+import { DriversModule } from './drivers/drivers.module';
+import { DriversGateway } from './drivers/drivers.gateway';
+import { DriversService } from './drivers/drivers.service';
+import { ChatService } from './chat/chat.service';
+import { ChatGateway } from './chat/chat.gateway';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [ChatModule],
+  imports: [SharedModule],
   controllers: [AppController],
   providers: [
-    AppService, 
-    AppGateway, 
-    MessageService, 
-    DriverService,
-  ],
+    AppService, ChatGateway, DriversGateway, ChatService, DriversService 
+  ]
 })
 export class AppModule {}

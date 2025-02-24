@@ -5,7 +5,7 @@ import { ChatService } from './chat.service';
 export class ChatController {
     
   constructor(private readonly chatService: ChatService) {}
-
+  // just for REST API
   @Get('messages')
   getMessages() {
     return this.chatService.getMessages();

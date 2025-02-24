@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class DriverService {
+export class DriversService {
+
   private drivers: string[] = []; // Store drivers
 
   getDrivers(): string[] {
     return this.drivers;
   }
+  // just to understand the logic
+  getDriver(driver: string): string {
+    return this.drivers[this.drivers.indexOf(driver)]
+  }
 
   addDriver(driver: string): void {
     this.drivers.push(driver);
+    console.log('driver added')
   }
 
   deleteDriver(driver: string): void {
@@ -27,3 +33,4 @@ export class DriverService {
     }
   }
 }
+
