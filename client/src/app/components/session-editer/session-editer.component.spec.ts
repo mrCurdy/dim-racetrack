@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FrontDeskComponent } from './old-front-desk.component';
+import { SessionEditerComponent } from './session-editer.component';
 
-describe('FrontDeskComponent', () => {
-  let component: FrontDeskComponent;
-  let fixture: ComponentFixture<FrontDeskComponent>;
+describe('SessionEditerComponent', () => {
+  let component: SessionEditerComponent;
+  let fixture: ComponentFixture<SessionEditerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FrontDeskComponent]
+      imports: [SessionEditerComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FrontDeskComponent);
+    fixture = TestBed.createComponent(SessionEditerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

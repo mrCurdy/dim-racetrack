@@ -2,16 +2,11 @@
     <div class="driver-list">
         <div class="driver-list-header">
             <h3>
-                {{ session }}
+                Drivers
             </h3>
             <div class="edit-delete-container">
                 <div class="edit" (click)="startEdit(sessionName)">edit</div>
                 <div class="edit" (click)="confirmDelete(sessionName)">delete</div>
-            </div>
-            <div class="edit-form driver-list-header" *ngIf="editingSession === driver">
-                <input [(ngModel)]="newDriverName" />
-                <button class="save-btn" (click)="saveEdit()">Save</button>
-                <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
             </div>
         </div>
         <div  *ngFor="let driver of drivers">
