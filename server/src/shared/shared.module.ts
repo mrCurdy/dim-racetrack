@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppGateway } from './app.gateway';
+import { AppGateway } from './shared.gateway';
 
 @Module({
 providers: [AppGateway],  // Make SharedGateway available

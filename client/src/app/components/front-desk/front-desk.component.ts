@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
-import { SocketService } from '../../services/socket.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DriverListService } from '../../services/driver-list.service';
 
 @Component({
   selector: 'app-front-desk',
@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs';
 })
 export class FrontDeskComponent implements OnInit{
   header: string = 'Front Desk'
+
+  sessionName: string = '';
 
   drivers: string[] = [];
   newDriver: string = '';
@@ -38,7 +40,7 @@ export class FrontDeskComponent implements OnInit{
   // ]);
 
   constructor(
-    private socketService: SocketService,
+    private driverListService: DriverListService,
     private headerService: HeaderService
   ) {}
 
@@ -52,7 +54,7 @@ export class FrontDeskComponent implements OnInit{
 
   // Subscribe to receive all drivers
   this.subscriptions.push(
-    this.socketService.receiveAllDrivers().subscribe((drivers) => {
+    this.driverListService.receiveAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
       console.log('all drivers recieved');
     })
@@ -60,7 +62,7 @@ export class FrontDeskComponent implements OnInit{
 
   // Subscribe to receive a new driver
   this.subscriptions.push(
-    this.socketService.receiveNewDriver().subscribe(driver => {
+    this.driverListService.receiveNewDriver().subscribe(driver => {
       this.drivers.push(driver);
       console.log('new driver recieved')
     })
@@ -68,7 +70,7 @@ export class FrontDeskComponent implements OnInit{
 
   // Subscribe to receive edited driver
   this.subscriptions.push(
-    this.socketService.receiveEditedDriver().subscribe(editedDriver => {
+    this.driverListService.receiveEditedDriver().subscribe(editedDriver => {
       const index = this.drivers.findIndex(d => d === editedDriver[0]);
       if (index !== -1) {
         this.drivers[index] = editedDriver[1];
@@ -78,7 +80,7 @@ export class FrontDeskComponent implements OnInit{
   
   // Subscribe to receive deleted driver
   this.subscriptions.push(
-    this.socketService.receiveDeletedDriver().subscribe(driver => {
+    this.driverListService.receiveDeletedDriver().subscribe(driver => {
       this.drivers = this.drivers.filter(d => d !== driver);
     })
   );
@@ -87,7 +89,7 @@ export class FrontDeskComponent implements OnInit{
   // add popup window
   registerDriver() {
     if (!this.drivers.includes(this.newDriver.trim()) ) {
-      this.socketService.registerDriver(this.newDriver.trim());
+      this.driverListService.registerDriver(this.newDriver.trim());
       this.newDriver = '';
     } else {
 
@@ -111,7 +113,7 @@ export class FrontDeskComponent implements OnInit{
   }
   deleteDriver(): void {
     if (this.driverToDelete) {
-      this.socketService.deleteDriver(this.driverToDelete);
+      this.driverListService.deleteDriver(this.driverToDelete);
       this.driverToDelete = null;
     }
   }
@@ -124,7 +126,7 @@ export class FrontDeskComponent implements OnInit{
   // need to add a popup window
   saveEdit(): void {
     if (this.editingDriver && this.newDriverName.trim() && !this.drivers.includes(this.newDriverName.trim())) {
-      this.socketService.editDriver(this.editingDriver, this.newDriverName.trim());
+      this.driverListService.editDriver(this.editingDriver, this.newDriverName.trim());
       this.editingDriver = null;
       this.newDriverName = '';
     }

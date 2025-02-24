@@ -2,8 +2,17 @@
     <div class="driver-list">
         <div class="driver-list-header">
             <h3>
-                Drivers:
+                {{ session }}
             </h3>
+            <div class="edit-delete-container">
+                <div class="edit" (click)="startEdit(sessionName)">edit</div>
+                <div class="edit" (click)="confirmDelete(sessionName)">delete</div>
+            </div>
+            <div class="edit-form driver-list-header" *ngIf="editingSession === driver">
+                <input [(ngModel)]="newDriverName" />
+                <button class="save-btn" (click)="saveEdit()">Save</button>
+                <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+            </div>
         </div>
         <div  *ngFor="let driver of drivers">
             <div class="driver-container"  *ngIf="editingDriver !== driver">
@@ -11,14 +20,13 @@
                 <div class="edit-delete-container">
                     <div class="edit" (click)="startEdit(driver)">edit</div>
                     <div class="edit" (click)="confirmDelete(driver)">delete</div>
-                    <div class="edit">session</div>
                 </div>
             </div>
-        <div class="edit-form driver-container" *ngIf="editingDriver === driver">
-            <input [(ngModel)]="newDriverName" />
-            <button class="save-btn" (click)="saveEdit()">Save</button>
-            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
-          </div>
+            <div class="edit-form driver-container" *ngIf="editingDriver === driver">
+                <input [(ngModel)]="newDriverName" />
+                <button class="save-btn" (click)="saveEdit()">Save</button>
+                <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+            </div>
             <!-- <div class="session-info"></div> -->
             <!-- <div class="driver" *ngFor="let driver of drivers">
                 <div *ngIf="editingDriver !== driver">
@@ -42,7 +50,7 @@
             [(ngModel)]="newDriver"
             (keydown)="onKeyDown($event)">
         </div>
-    </div>
+    <!-- </div>
     <div class="driver-list">
         <div class="driver-list-header">
             <h3>
@@ -56,7 +64,7 @@
                 <div class="edit">move</div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <div class="popup" *ngIf="driverToDelete">
